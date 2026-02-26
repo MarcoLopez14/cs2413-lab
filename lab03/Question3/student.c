@@ -1,18 +1,24 @@
-// Question3/student.c
-// ------------------------------------------------------------
-// CS Lab03 - Linked List Cycle 
-//
-// TODO:
-//   Implement hasCycle(head) using fast/slow pointers.
-//
-// Rules:
-// - Do not allocate new nodes.
-// - Do not modify the list.
-// ------------------------------------------------------------
-
 #include "student.h"
+#include <stddef.h>
 
-bool hasCycle(struct ListNode *head) {
-    // TODO: implement
+struct ListNode* swapPairs(struct ListNode* head) {
+    if (head == NULL || head->next == NULL) return head;
 
+    struct ListNode* newHead = head->next;
+    struct ListNode* prev = NULL;
+    struct ListNode* curr = head;
+
+    while (curr && curr->next) {
+        struct ListNode* second = curr->next;
+
+        curr->next = second->next;
+        second->next = curr;
+
+        if (prev) prev->next = second;
+
+        prev = curr;
+        curr = curr->next;
+    }
+
+    return newHead;
 }
